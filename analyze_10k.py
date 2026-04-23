@@ -13,9 +13,7 @@ def extract_text(pdf_path, max_pages=10):
     return text
 
 # Ask Claude a question about the document
-def ask_claude(context, question):
-    client = boto3.client("bedrock-runtime", region_name="us-east-1")
-    
+def ask_claude(client, context, question):
     prompt = f"""You are a financial analyst assistant. Use only the document excerpt below to answer the question. 
 If the answer isn't in the document, say so.
 
@@ -39,12 +37,22 @@ QUESTION:
     result = json.loads(response["body"].read())
     return result["content"][0]["text"]
 
+# Questions to ask
+QUESTIONS = [
+    "What are the primary business segments of this company?",
+    "What are the most significant risks the company has identified?",
+    "What was the company's total revenue for the most recent fiscal year?",
+    "How does the company describe its competitive position in the market?",
+]
+
 # Main
+client = boto3.client("bedrock-runtime", region_name="us-east-1")
 text = extract_text("GS_2025_10K.pdf")
 print(f"Extracted {len(text)} characters from the 10-K\n")
+print("=" * 60)
 
-question = "What are the primary business segments of this company?"
-print(f"Question: {question}\n")
-
-answer = ask_claude(text, question)
-print(f"Answer: {answer}")
+for question in QUESTIONS:
+    print(f"\nQUESTION: {question}\n")
+    answer = ask_claude(client, text, question)
+    print(f"ANSWER: {answer}")
+    print("=" * 60)
