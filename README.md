@@ -204,6 +204,11 @@ This is a prototype. A production FS deployment would add:
 - **Rate limiting** — Bedrock has per-account token limits; production needs queuing
 - **Entity disambiguation** — parent company vs subsidiary CET1 ratios require explicit entity filtering, not just semantic search
 
+### AWS Credentials
+This project uses your local AWS credentials via boto3. 
+Never hardcode credentials in the code. Configure them with:
+`aws configure`
+
 ## Roadmap
 
 - [x] Basic PDF loading and Claude Q&A
