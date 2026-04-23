@@ -94,12 +94,27 @@ else:
     np.save(EMBEDDINGS_FILE, chunk_embeddings)
     print("Saved chunks and embeddings to disk\n")
 
+# Interactive CLI
+print("=" * 60)
+print("Goldman Sachs 10-K Analyzer")
+print("Ask any question about the filing. Type 'quit' to exit.")
 print("=" * 60)
 
-for question in QUESTIONS:
-    print(f"\nQUESTION: {question}\n")
+while True:
+    print()
+    question = input("Your question: ").strip()
+    
+    if not question:
+        continue
+    
+    if question.lower() in ("quit", "exit", "q"):
+        print("Goodbye!")
+        break
+    
     relevant_chunks = find_relevant_chunks(question, chunks, chunk_embeddings)
     context = "\n\n".join(relevant_chunks)
+    
+    print("\nAnalyzing...\n")
     answer = ask_claude(client, context, question)
-    print(f"ANSWER: {answer}")
-    print("=" * 60)
+    print(f"Answer: {answer}")
+    print("\n" + "-" * 60)
