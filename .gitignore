@@ -1,3 +1,6 @@
 echo "chunks.pkl" >> .gitignore
 echo "embeddings.npy" >> .gitignore
 echo "venv/" >> .gitignoremetrics_output.json
+uploaded_*.pdf
+*_chunks.pkl
+*_embeddings.npy
