@@ -1,0 +1,3 @@
+echo "chunks.pkl" >> .gitignore
+echo "embeddings.npy" >> .gitignore
+echo "venv/" >> .gitignore
